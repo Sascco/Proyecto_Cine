@@ -78,9 +78,10 @@ jobs:
       - name: ✅ Verify setup
         run: |
           python3 --version
-          pip list | grep -E "(pytest|selenium|cov|behave)"
+          pip list
+          pip list | grep -E "(pytest|selenium|cov|behave)" || true
           which google-chrome
-          which Xvfb
+          which Xvfb      
 
       # Paso 9: Ejecutar pruebas con cobertura y reportes
       - name: 🧪 Run tests with Pytest

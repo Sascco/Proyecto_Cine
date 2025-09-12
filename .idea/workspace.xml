@@ -26,6 +26,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Sascco"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Sascco/Proyecto_Cine.git",
+    "accountId": "f0d554e2-6e0d-414f-8cde-f31b040c2671"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -39,7 +51,8 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "last_opened_file_path": "C:/Codigo Facilito Repo/Proyecto Final/Proyecto_Cinema",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Codigo Facilito Repo/Proyecto Final/Proyecto Cine",
     "settings.editor.selected.configurable": "configurable.group.tools"
   }
 }]]></component>
@@ -59,5 +72,22 @@
       <updated>1757471082928</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

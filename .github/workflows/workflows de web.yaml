@@ -77,7 +77,7 @@ jobs:
       # Paso 8: Verificar que el setup esté correcto
       - name: ✅ Verify setup
         run: |
-          python --version
+          python3 --version
           pip list | grep -E "(pytest|selenium|cov|behave)"
           which google-chrome
           which Xvfb

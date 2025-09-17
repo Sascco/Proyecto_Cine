@@ -71,7 +71,7 @@ jobs:
             cp .env.example .env
           else
             echo "# Environment variables" > .env
-            echo "BASE_URL=http://localhost:8000" >> .env
+            echo "https://fake-cinema.vercel.app/" >> .env
           fi
 
       # Paso 8: Verificar que el setup esté correcto
@@ -113,7 +113,7 @@ jobs:
           path: |
             reports/**
             **/screenshots/**
-          if-no-file-found: ignore
+          if-no-files-found: ignore
           retention-days: 7  # Conservar artifacts por 7 días
 
       # Paso 11: Opcional - Subir reporte de cobertura a Codecov

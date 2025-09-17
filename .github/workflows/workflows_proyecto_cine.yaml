@@ -112,9 +112,9 @@ jobs:
           name: test-artifacts-${{ github.run_id }}
           path: |
             reports/**
-            **/screenshots/**
+            */screenshots/*
           if-no-files-found: ignore
-          retention-days: 7  # Conservar artifacts por 7 días
+          retention-days: 7  # Conservar artifacts por 7 días
 
       # Paso 11: Opcional - Subir reporte de cobertura a Codecov
       - name: 📈 Upload coverage to Codecov (Optional)

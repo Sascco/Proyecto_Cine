@@ -1,6 +1,7 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 
 
 class BrowserManager:
@@ -8,20 +9,18 @@ class BrowserManager:
         self.driver = None
 
     def get_driver(self):
-        """Obtiene un driver de Chrome"""
-        # Descargar automáticamente el ChromeDriver correcto
-        service = ChromeService(ChromeDriverManager().install())
+        options = Options()
+        options.add_argument("--headless=new")  # modo headless moderno
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
 
-        # Crear el driver de Chrome
-        self.driver = webdriver.Chrome(service=service)
-
-        # Maximizar la ventana
+        self.driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install()),
+            options=options
+        )
         self.driver.maximize_window()
-
         return self.driver
 
-    def close_driver(self):
-        """Cierra el driver si existe"""
+    def quit_driver(self):
         if self.driver:
             self.driver.quit()
-            self.driver = None

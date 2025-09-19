@@ -7,7 +7,7 @@ def browser_manager():
     """Crea el manager del navegador una vez por sesión"""
     manager = BrowserManager()
     yield manager
-    manager.close_driver()
+    manager.quit_driver()
 
 @pytest.fixture(scope="function")
 def driver(browser_manager):

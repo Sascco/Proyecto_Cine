@@ -1,30 +1,26 @@
 """Acciones generales: como dar click, escribir, visitar una pagina web. lo que vamos hacer en la pagina de forma general """
-
-from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
 class BasePage:
-    def __init__(self, driver: WebDriver) -> None:
+    def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(driver, 10)
 
-    def visit(self, url: str):                                          # Navega a una URL
-        self.driver.get(url)
+    def find_element(self, locator):
+        """Encuentra un elemento con espera de 10 segundos"""
+        return self.wait.until(EC.presence_of_element_located(locator))
 
-    def click(self, locator: tuple[By, str]):                           # Hace click en un elemento localizado por un tuple (By, selector).
-        self.driver.find_element(*locator).click()
+    def find_elements(self, locator):
+        """Encuentra múltiples elementos"""
+        return self.wait.until(EC.presence_of_all_elements_located(locator))
 
-    def type(self, locator: tuple[By, str], text: str):                 # Limpia y escribe texto en un input.
-        element = self.driver.find_element(*locator)
-        element.clear()
-        element.send_keys(text)
-
-    def text_of_element(self, locator: tuple[By, str]) -> str:          # Obtiene el texto de un elemento.
-        return self.driver.find_element(*locator).text
-
-    def element_is_visible(self, locator: tuple[By, str]) -> bool:      # Devuelve True si el elemento está visible, False si no existe o está oculto.
+    def is_element_visible(self, locator):
+        """Verifica si un elemento es visible"""
         try:
-            return self.driver.find_element(*locator).is_displayed()
-        except NoSuchElementException:
+            self.wait.until(EC.visibility_of_element_located(locator))
+            return True
+        except TimeoutException:
             return False

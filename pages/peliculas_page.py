@@ -1,10 +1,22 @@
-"""from selenium.webdriver.common.by import By
+from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
-class MoviesPage(BasePage): #Localizadores de los elementos requeridos
-    pass
 
+class PeliculasPage(BasePage):
+    # Localizadores
+    CARTELERA_TITULO = (By.XPATH, "//h2[contains(text(), 'Cartelera')]")
 
-    def __init__(self,driver):
-        
-"""
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.url = "https://fake-cinema.vercel.app/"  # ← Esta línea debe ser exactamente así
+
+    def abrir(self):
+        """Navega a la página principal"""
+        print(f"🌐 Navegando a: {self.url}")
+        self.driver.get(self.url)
+        print("✅ Página cargada")
+
+    def obtener_titulo_cartelera(self):
+        """Obtiene el texto del título de cartelera"""
+        elemento = self.find_element(self.CARTELERA_TITULO)
+        return elemento.text

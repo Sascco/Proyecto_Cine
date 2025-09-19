@@ -1,19 +1,17 @@
 """Archivo de configuración de pytest: define fixtures, hooks y opciones compartidas para todos los tests"""
-
 import pytest
-from utils.driver_factory import create_driver
+from utils.browser import BrowserManager
 
+@pytest.fixture(scope="session")
+def browser_manager():
+    """Crea el manager del navegador una vez por sesión"""
+    manager = BrowserManager()
+    yield manager
+    manager.close_driver()
 
-def pytest_adoption(parser):
-    parser.addoption(
-        "--headless",
-        action="store_true",
-        help="Ejecutar pruebas en modo headless (sin interfaz de usuario)"
-    )
-
-@pytest.fixture()
-def driver(request):
-        headless = request.config.getoption("--headless")
-        driver = create_driver(headless=headless)
-        yield driver
-        driver.quit()
+@pytest.fixture(scope="function")
+def driver(browser_manager):
+    """Proporciona un driver limpio para cada test"""
+    driver = browser_manager.get_driver()
+    yield driver
+    driver.quit()                #Se cierra el navegador

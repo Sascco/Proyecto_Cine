@@ -14,4 +14,4 @@ def driver(browser_manager):
     """Proporciona un driver limpio para cada test"""
     driver = browser_manager.get_driver()
     yield driver
-    driver.quit()                #Se cierra el navegador
+    #driver.quit()                #Se cierra el navegador

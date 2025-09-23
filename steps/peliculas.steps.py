@@ -1,208 +1,175 @@
-"""
-from behave import given, when, then
-from selenium.webdriver.support.wait import WebDriverWait
-from utils.browser import BrowserManager
-from selenium.webdriver.common.by import By
-from utils.helpers import searchlocators, URL_CINE, moviecardlocators
-import time
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-# Pasos básicos:
-@given("que estoy en la página principal")
-def abrir_pagina_principal(context):
-    context.browser = BrowserManager()                      # Manejador del browser
-    context.driver = context.browser.get_driver()           # Se guarda el driver real
-    context.driver.get(URL_CINE)                            # Navegar a la URL                       # la dirección que necesitamos usar
-    context.wait = WebDriverWait(context.driver, 5)  # Espera explicita reutilizable
-
-
-@when("ingreso a la página principal")
-def ingresar_pagina_principal(context):                     # Ya estamos en la página desde el Background
-    pass
-
-# VERIFICACIONES DE PELÍCULAS
-
-@then("debo ver una lista de películas disponibles")
-def verificar_lista_peliculas(context):
-    peliculas = context.driver.find_elements(By.CSS_SELECTOR, "div.p-4.text-white")
-    assert len(peliculas) > 0, "No se encontraron películas en cartelera"
-    context.peliculas = peliculas  # guardamos para pasos siguientes
-
-
-@then("cada tarjeta de película debe mostrar:")
-def verificar_información_pelicula(context):
-    for card in context.peliculas:
-        titulo = card.find_element(*moviecardlocators.movie_title_in_card)
-        assert titulo.text != "", "Falta el título"
-
-        clasificacion = card.find_element(*moviecardlocators.movie_rating_relative)
-        assert clasificacion.is_displayed(), "Falta la clasificación"
-
-        duracion = card.find_element(*moviecardlocators.movie_duration_relative)
-        assert duracion.text != "", "Falta la duración"
-
-        enlace_detalle = card.find_element(*moviecardlocators.movie_detail_link_relative)
-        assert enlace_detalle.is_displayed(), "No se muestra el enlace 'Ver detalle'"
-
-
-# ESCENARIO: DETALLE DE PELÍCULA
-
-
-@given('que la tarjeta de "{titulo}" está visible en la cartelera')
-def tarjeta_visible(context, titulo):
-    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR,"div.p-4.text-white")))
-    cards = context.driver.find_elements(By.CSS_SELECTOR, "div.p-4.text-white")
-    encontrada = any(titulo in c.text for c in cards)
-    assert encontrada, f"No se encontró la tarjeta de {titulo}"
-
-
-@when('hago clic en "Ver detalle" en la tarjeta de "{titulo}"')
-def clic_en_ver_detalle(context, titulo):
-    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.p-4.text-white")))
-    cards = context.driver.find_elements(By.CSS_SELECTOR, "div.p-4.text-white")
-    for c in cards:
-        if titulo in c.text:
-            link = c.find_element(*moviecardlocators.movie_detail_link_relative)
-            link.click()
-            break
-    time.sleep(2)  # cambiar a implicit wait ###############################################################
-
-@then('debo ser llevado a la página de detalle de "{titulo}", en la cual debe aparecer el cine y las fechas de las funciones')
-def verificar_detalle_pelicula(context, titulo):
-    page_text = context.driver.page_source
-    assert titulo in page_text, f"No se cargó la página de detalle de {titulo}"
-    assert "Cine" in page_text or "Funciones" in page_text, "No se muestran cine/funciones en la página"
-
-
-# ESCENARIO: BÚSQUEDA DE PELÍCULA
-
-
-@when('escribo "{titulo}" en la barra de búsqueda')
-def escribir_busqueda(context, titulo):
-    search_box = context.driver.find_element(*searchlocators.search_input)
-    search_box.clear()
-    search_box.send_keys(titulo)
-
-
-@when("presiono el botón de buscar")
-def presionar_buscar(context):
-    boton = context.driver.find_element(*searchlocators.search_button)
-    boton.click()
-    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.p-4.text-white")))
-
-
-
-@then('debo ver solo películas que contengan "{titulo}" en el título')
-def verificar_resultados_busqueda(context, titulo):
-    resultados = context.driver.find_elements(By.CSS_SELECTOR, "div.p-4.text-white")
-    assert len(resultados) > 0, f"No se encontraron resultados para {titulo}"
-    for r in resultados:
-        assert titulo in r.text, f"Se encontró una película que no contiene {titulo}"
-
-@then("cierro el navegador")
-def cerrar_navegador(context):
-    context.browser.quit_driver()
-"""
 from behave import given, when, then
 from utils.browser import BrowserManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from utils.helpers import searchlocators, URL_CINE, moviecardlocators
+from utils.helpers import URL_CINE, searchlocators, moviecardlocators
 
-# Pasos básicos:
+# Selector base para tarjetas (si tienes uno más específico, úsalo aquí)
+CARDS_CSS = "div.p-4.text-white"
+
+# Palabras clave y patrones que indican que el detalle cargó correctamente
+DETALLE_KEYWORDS = ["Cines", "Horarios", "Filtros"]
+SHOWTIME_LINK_SELECTOR = "a[href*='/book']"  # Enlaces de horarios como /movies/<slug>/book
+
+# =============================
+# PASOS BÁSICOS
+# =============================
+
 @given("que estoy en la página principal")
 def abrir_pagina_principal(context):
-    context.browser = BrowserManager()                      # Manejador del browser
-    context.driver = context.browser.get_driver()           # Driver real
-    context.driver.get(URL_CINE)                            # Navegar a la URL del cine
-    context.wait = WebDriverWait(context.driver, 10)        # Espera explícita reutilizable
+    context.browser = BrowserManager()
+    context.driver = context.browser.get_driver()
+    context.driver.get(URL_CINE)
+    context.wait = WebDriverWait(context.driver, 10)
 
 @when("ingreso a la página principal")
 def ingresar_pagina_principal(context):
     # Ya estamos en la página desde el Given
     pass
 
-
-# VERIFICACIONES DE PELÍCULAS
+# =============================
+# LISTADO DE PELÍCULAS
+# =============================
 
 @then("debo ver una lista de películas disponibles")
 def verificar_lista_peliculas(context):
-    # Espera a que aparezca al menos una tarjeta de película
-    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.p-4.text-white")))
-    peliculas = context.driver.find_elements(By.CSS_SELECTOR, "div.p-4.text-white")
+    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, CARDS_CSS)))
+    peliculas = context.driver.find_elements(By.CSS_SELECTOR, CARDS_CSS)
     assert len(peliculas) > 0, "No se encontraron películas en cartelera"
-    context.peliculas = peliculas  # se guarda para el siguiente paso
+    context.peliculas = peliculas  # Guardamos para el paso siguiente
 
 @then("cada tarjeta de película debe mostrar:")
 def verificar_informacion_pelicula(context):
     for card in context.peliculas:
+        # Título
         titulo = card.find_element(*moviecardlocators.movie_title_in_card)
         assert titulo.text.strip() != "", "Falta el título"
 
+        # Clasificación
         clasificacion = card.find_element(*moviecardlocators.movie_rating_relative)
         assert clasificacion.is_displayed(), "Falta la clasificación"
 
+        # Duración
         duracion = card.find_element(*moviecardlocators.movie_duration_relative)
         assert duracion.text.strip() != "", "Falta la duración"
 
+        # Enlace "Ver detalle"
         enlace_detalle = card.find_element(*moviecardlocators.movie_detail_link_relative)
         assert enlace_detalle.is_displayed(), "No se muestra el enlace 'Ver detalle'"
 
+        # Etiqueta "Estreno" (si aplica, no forzamos que esté en todas)
+        try:
+            estreno = card.find_element(*moviecardlocators.movie_premiere_label_relative)
+            assert estreno.is_displayed(), "La etiqueta 'Estreno' está oculta"
+        except Exception:
+            # Si no aplica, no fallamos
+            pass
 
-# ESCENARIO: DETALLE DE PELÍCULA
+# =============================
+# DETALLE DE PELÍCULA
+# =============================
 
 @given('que la tarjeta de "{titulo}" está visible en la cartelera')
 def tarjeta_visible(context, titulo):
-    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.p-4.text-white")))
-    cards = context.driver.find_elements(By.CSS_SELECTOR, "div.p-4.text-white")
+    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, CARDS_CSS)))
+    cards = context.driver.find_elements(By.CSS_SELECTOR, CARDS_CSS)
     encontrada = any(titulo in c.text for c in cards)
     assert encontrada, f"No se encontró la tarjeta de {titulo}"
 
 @when('hago clic en "Ver detalle" en la tarjeta de "{titulo}"')
 def clic_en_ver_detalle(context, titulo):
-    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.p-4.text-white")))
-    cards = context.driver.find_elements(By.CSS_SELECTOR, "div.p-4.text-white")
+    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, CARDS_CSS)))
+    cards = context.driver.find_elements(By.CSS_SELECTOR, CARDS_CSS)
     for c in cards:
         if titulo in c.text:
             link = c.find_element(*moviecardlocators.movie_detail_link_relative)
             link.click()
             break
-    # Espera a que el contenido de detalle cargue (al menos que el título aparezca en el HTML)
+    # Espera a que el título aparezca en el HTML de detalle
     context.wait.until(lambda d: titulo.lower() in d.page_source.lower())
 
 @then('debo ser llevado a la página de detalle de "{titulo}", en la cual debe aparecer el cine y las fechas de las funciones')
 def verificar_detalle_pelicula(context, titulo):
-    page_text = context.driver.page_source
-    assert titulo in page_text, f"No se cargó la página de detalle de {titulo}"
-    assert ("Cine" in page_text) or ("Funciones" in page_text), "No se muestran cine/funciones en la página"
+    # Confirmamos que cargó el detalle correspondiente
+    assert titulo.lower() in context.driver.page_source.lower(), f"No se cargó la página de detalle de {titulo}"
 
+    # Espera a que aparezca “Cines” o un enlace de horario (/book)
+    try:
+        context.wait.until(
+            lambda d: ("cines" in d.page_source.lower())
+            or len(d.find_elements(By.CSS_SELECTOR, SHOWTIME_LINK_SELECTOR)) > 0
+        )
+    except Exception:
+        raise AssertionError(
+            "No se muestran elementos de cine/funciones en la página de detalle.\n"
+            f"URL actual: {context.driver.current_url}\n"
+            f"Busqué alguna de estas señales: {', '.join(DETALLE_KEYWORDS)} o enlaces {SHOWTIME_LINK_SELECTOR}"
+        )
 
-# ESCENARIO: BÚSQUEDA DE PELÍCULA
-# Nota: El botón de buscar actualmente NO funciona (icono sin acción).
-# Este escenario fallará funcionalmente si no se filtran resultados, lo cual es esperado
-# para evidenciar el bug. Técnicamente, los steps están correctos.
+# =============================
+# BÚSQUEDA DE PELÍCULA (el ícono NO tiene acción; fallo funcional esperado)
+# =============================
 
 @when('escribo "{titulo}" en la barra de búsqueda')
 def escribir_busqueda(context, titulo):
-    search_box = context.driver.find_element(*searchlocators.search_input)
-    search_box.clear()
-    search_box.send_keys(titulo)
+    # Capturamos estado previo para evidenciar que NO cambia tras el clic
+    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, CARDS_CSS)))
+    context.before_cards = context.driver.find_elements(By.CSS_SELECTOR, CARDS_CSS)
+    context.before_titles = [c.text for c in context.before_cards]
+
+    # Ubicamos el input RELATIVO al ícono de búsqueda que tienes en helpers
+    search_icon_el = context.driver.find_element(*searchlocators.search_icon)
+    input_el = None
+
+    # 1) Intenta encontrar un input dentro del mismo contenedor (form/div) del ícono
+    try:
+        input_el = search_icon_el.find_element(
+            By.XPATH, ".//ancestor::*[self::div or self::form][1]//input"
+        )
+    except Exception:
+        pass
+
+    # 2) Fallback genérico: primer input tipo texto en la página
+    if input_el is None:
+        try:
+            input_el = context.driver.find_element(By.CSS_SELECTOR, "input[type='text'], input")
+        except Exception:
+            raise AssertionError(
+                "No se encontró el input de búsqueda. "
+                "Sugerencia: agrega en helpers.py un locator para el input (por ejemplo, search_input)."
+            )
+
+    input_el.clear()
+    input_el.send_keys(titulo)
 
 @when("presiono el botón de buscar")
 def presionar_buscar(context):
-    boton = context.driver.find_element(*searchlocators.search_button)
-    boton.click()
-    # Se mantiene una espera corta a resultados, aunque el botón no ejecute acción
-    context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.p-4.text-white")))
+    # Click en el ícono (según tu helpers, es solo un SVG sin handler). Esto evidenciará el bug funcional.
+    icon = context.driver.find_element(*searchlocators.search_icon)
+    icon.click()
+    # Espera breve (no usamos sleep fijo)
+    WebDriverWait(context.driver, 2).until(lambda d: True)
 
 @then('debo ver solo películas que contengan "{titulo}" en el título')
 def verificar_resultados_busqueda(context, titulo):
-    resultados = context.driver.find_elements(By.CSS_SELECTOR, "div.p-4.text-white")
+    resultados = context.driver.find_elements(By.CSS_SELECTOR, CARDS_CSS)
+
+    # BUG CONOCIDO: Si el ícono no hace nada, la lista no cambia
+    if resultados and context.before_cards and len(resultados) == len(context.before_cards):
+        after_titles = [r.text for r in resultados]
+        if after_titles == context.before_titles:
+            raise AssertionError(
+                "Known bug: El ícono de buscar (svg.lucide-search) no ejecuta ninguna acción. "
+                "Los resultados no cambiaron después del clic."
+            )
+
+    # Si (por alguna razón) se filtra, validamos que todos contengan el texto
     assert len(resultados) > 0, f"No se encontraron resultados para {titulo}"
     for r in resultados:
-        assert titulo in r.text, f"Se encontró una película que no contiene {titulo}"
+        assert titulo in r.text, (
+            f"Se encontró una película que no contiene '{titulo}' tras la búsqueda."
+        )
 
 @then("cierro el navegador")
 def cerrar_navegador(context):

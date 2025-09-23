@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2ea2392f-dbd2-4b42-881a-ce1502b4d971" name="Changes" comment="Behave-BDD-Peliculas">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/steps/peliculas.steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/steps/peliculas.steps.py" afterDir="false" />
-    </list>
+    <list default="true" id="2ea2392f-dbd2-4b42-881a-ce1502b4d971" name="Changes" comment="Behave-BDD-Peliculas" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -241,7 +238,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758598756941</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Behave-BDD-Peliculas">
+      <option name="closed" value="true" />
+      <created>1758600150231</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1758600150231</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">

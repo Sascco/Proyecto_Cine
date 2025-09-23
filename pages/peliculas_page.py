@@ -18,7 +18,7 @@ class PeliculasPage(BasePage):
         self.driver.get(self.url)
         print("✅ Página cargada")
 
-    def obtener_titulo_cartelera(self):         """Obtiene el texto del título de cartelera"""
+    def titulo_cartelera(self):
         elemento = self.find_element(self.CARTELERA_TITULO)
         return elemento.text
 

@@ -1,27 +1,49 @@
-from selenium.webdriver.common.by import By
+"""
+Page Object Model para la página de películas
+Contiene métodos para interactuar con la cartelera de cine
+"""
+
 from pages.base_page import BasePage
+from utils.helpers import MovieCardLocators, NavigationLocators
 
 
 class PeliculasPage(BasePage):
-
-    # Localizadores
-    CARTELERA_TITULO = (By.XPATH, "//h2[contains(text(), 'Cartelera')]")
-    VER_DETALLE = (By.XPATH, "/html/body/div/main/section[2]/div[2]/div[4]/div/a"")
+    """Representa la página principal de cartelera de películas"""
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.url = "https://fake-cinema.vercel.app/"  # ← Esta línea debe ser exactamente así
+        self.url = "https://fake-cinema.vercel.app/"
 
     def abrir(self):
-        """Navega a la página principal"""
-        print(f"Navegando a: {self.url}")
+        """Navega a la página principal del cine"""
         self.driver.get(self.url)
-        print("Página cargada")
+        print(f"Navegando a: {self.url}")
 
     def obtener_titulo_cartelera(self):
-        titulo_element = self.driver.find_element(*self.CARTELERA_TITULO)
-        return titulo_element.text
+        """Obtiene el título de la sección de cartelera"""
+        return self.get_text(NavigationLocators.CARTELERA_TITLE)
 
-    def ver_detalles_pelicula(self):
-        elemento = self.find_element(*self.VER_DETALLE)
-        elemento.click()
+    def obtener_peliculas(self):
+        """Retorna la lista de elementos de tarjetas de películas"""
+        return self.find_elements(MovieCardLocators.MOVIE_CARD)
+
+    def hacer_clic_ver_detalle(self, indice_pelicula=0):
+        """
+        Hace clic en 'Ver detalle' de una película específica
+
+        Args:
+            indice_pelicula (int): Índice de la película en la lista (0-based)
+        """
+        peliculas = self.obtener_peliculas()
+        if indice_pelicula < len(peliculas):
+            link_detalle = peliculas[indice_pelicula].find_element(
+                *MovieCardLocators.MOVIE_DETAIL_LINK
+            )
+            link_detalle.click()
+        else:
+            raise IndexError(f"Índice {indice_pelicula} fuera de rango. Total películas: {len(peliculas)}")
+
+    def buscar_pelicula(self, texto_busqueda):
+        """Realiza una búsqueda de película (si la funcionalidad está implementada)"""
+        # Nota: Esta funcionalidad depende de que el sitio tenga implementada la búsqueda
+        print("Advertencia: La funcionalidad de búsqueda puede no estar implementada en el sitio")

@@ -11,7 +11,7 @@ class BrowserManager:
     def get_driver(self): #Función que configura y devuelve un driver de Chrome
         chrome_options = Options()
         chrome_options.add_argument("--start-maximized")  # Abre la ventana maximizada
-        chrome_options.add_argument("--headless")  # Descomenta para modo sin ventana
+        #chrome_options.add_argument("--headless")  # Descomenta para modo sin ventana
 
         self.driver = webdriver.Chrome(
             service=Service(ChromeDriverManager().install()),

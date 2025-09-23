@@ -38,28 +38,28 @@ proyecto-cine/
   git clone <repositorio>
   cd proyecto-cine
 ```
-2. Crear entorno virtual (recomendado)
+### 2. Crear entorno virtual (recomendado)
 ```bash
   python -m venv venv
   source venv/bin/activate  # Linux/Mac
   venv\Scripts\activate     # Windows
 ```
-3. Instalar dependencias
+### 3. Instalar dependencias
 ```bash
   pip install -r requirements.txt
 ```
-4. Verificar instalación
+### 4. Verificar instalación
 ```bash
   python --version
   pytest --version
   behave --version
 ```
-🧪 Ejecución de Pruebas
+### 🧪 Ejecución de Pruebas
 ```bash
   pytest -v
 ```
 
-Ejecutar tests específicos
+### Ejecutar tests específicos
 ```bash
   # Solo tests E2E
   pytest -m e2e -v
@@ -70,7 +70,7 @@ Ejecutar tests específicos
   # Tests con reporte HTML
   pytest --html=reports/report.html
 ```
-Ejecutar pruebas BDD con Behave
+### Ejecutar pruebas BDD con Behave
 
 ```bash
   # Todos los features
@@ -83,7 +83,7 @@ Ejecutar pruebas BDD con Behave
   behave -f pretty
 ```
 
-Ejecutar con cobertura
+### Ejecutar con cobertura
 ```bash
   pytest --cov=. --cov-report=html
 ```

@@ -12,9 +12,9 @@ CARDS_CSS = "div.p-4.text-white"
 DETALLE_KEYWORDS = ["Cines", "Horarios", "Filtros"]
 SHOWTIME_LINK_SELECTOR = "a[href*='/book']"  # Enlaces de horarios como /movies/<slug>/book
 
-# =============================
+
 # PASOS BÁSICOS
-# =============================
+
 
 @given("que estoy en la página principal")
 def abrir_pagina_principal(context):
@@ -28,21 +28,20 @@ def ingresar_pagina_principal(context):
     # Ya estamos en la página desde el Given
     pass
 
-# =============================
+
 # LISTADO DE PELÍCULAS
-# =============================
+
 
 @then("debo ver una lista de películas disponibles")
 def verificar_lista_peliculas(context):
     context.wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, CARDS_CSS)))
     peliculas = context.driver.find_elements(By.CSS_SELECTOR, CARDS_CSS)
     assert len(peliculas) > 0, "No se encontraron películas en cartelera"
-    context.peliculas = peliculas  # Guardamos para el paso siguiente
+    context.peliculas = peliculas                           # Guardamos para el paso siguiente
 
 @then("cada tarjeta de película debe mostrar:")
 def verificar_informacion_pelicula(context):
     for card in context.peliculas:
-        # Título
         titulo = card.find_element(*moviecardlocators.movie_title_in_card)
         assert titulo.text.strip() != "", "Falta el título"
 
@@ -66,9 +65,9 @@ def verificar_informacion_pelicula(context):
             # Si no aplica, no fallamos
             pass
 
-# =============================
+
 # DETALLE DE PELÍCULA
-# =============================
+
 
 @given('que la tarjeta de "{titulo}" está visible en la cartelera')
 def tarjeta_visible(context, titulo):
@@ -107,9 +106,9 @@ def verificar_detalle_pelicula(context, titulo):
             f"Busqué alguna de estas señales: {', '.join(DETALLE_KEYWORDS)} o enlaces {SHOWTIME_LINK_SELECTOR}"
         )
 
-# =============================
+
 # BÚSQUEDA DE PELÍCULA (el ícono NO tiene acción; fallo funcional esperado)
-# =============================
+
 
 @when('escribo "{titulo}" en la barra de búsqueda')
 def escribir_busqueda(context, titulo):
@@ -122,7 +121,7 @@ def escribir_busqueda(context, titulo):
     search_icon_el = context.driver.find_element(*searchlocators.search_icon)
     input_el = None
 
-    # 1) Intenta encontrar un input dentro del mismo contenedor (form/div) del ícono
+    ############### OJO     1) Intenta encontrar un input dentro del mismo contenedor (form/div) del ícono
     try:
         input_el = search_icon_el.find_element(
             By.XPATH, ".//ancestor::*[self::div or self::form][1]//input"
@@ -145,11 +144,9 @@ def escribir_busqueda(context, titulo):
 
 @when("presiono el botón de buscar")
 def presionar_buscar(context):
-    # Click en el ícono (según tu helpers, es solo un SVG sin handler). Esto evidenciará el bug funcional.
-    icon = context.driver.find_element(*searchlocators.search_icon)
+    icon = context.driver.find_element(*searchlocators.search_icon)    # Click en el ícono - Esto evidenciará el bug funcional.
     icon.click()
-    # Espera breve (no usamos sleep fijo)
-    WebDriverWait(context.driver, 2).until(lambda d: True)
+    WebDriverWait(context.driver, 2).until(lambda d: True)      # Espera breve (no usamos sleep fijo)
 
 @then('debo ver solo películas que contengan "{titulo}" en el título')
 def verificar_resultados_busqueda(context, titulo):

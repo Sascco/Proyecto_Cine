@@ -19,11 +19,9 @@ class PeliculasPage(BasePage):
         print("Página cargada")
 
     def obtener_titulo_cartelera(self):
-        # Usa el nombre correcto de la variable: self.CARTELERA_TITULO
         titulo_element = self.driver.find_element(*self.CARTELERA_TITULO)
         return titulo_element.text
 
     def ver_detalles_pelicula(self):
-        # Suponiendo que find_element es un método de tu BasePage
         elemento = self.find_element(*self.VER_DETALLE)
         elemento.click()

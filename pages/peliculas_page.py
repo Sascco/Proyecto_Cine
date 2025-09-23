@@ -6,7 +6,7 @@ class PeliculasPage(BasePage):
 
     # Localizadores
     CARTELERA_TITULO = (By.XPATH, "//h2[contains(text(), 'Cartelera')]")
-    VER_DETALLE = (By.XPATH, "/html/body/div/main/section[2]/div[2]/div[4]/div/a"")
+    VER_DETALLE = (By.XPATH, "/html/body/div/main/section[2]/div[2]/div[4]/div/a")
 
     def __init__(self, driver):
         super().__init__(driver)

@@ -25,4 +25,4 @@ class MovieCardLocators:
 class NavigationLocators:
     """Localizadores para navegación y elementos generales"""
     CARTELERA_TITLE = (By.XPATH, "//h2[contains(text(), 'Cartelera')]")
-    PAGE_HEADER = (By.TAG_NAME, "h1")EADER = (By.TAG_NAME, "h1")l_link_relative = (By.XPATH, ".//a[text()='Ver detalle']")
+    PAGE_HEADER = (By.TAG_NAME, "h1")

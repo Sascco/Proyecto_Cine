@@ -3,7 +3,7 @@
 Este proyecto contiene pruebas automatizadas para el sistema de cine "Fake Cinema" implementado en `https://fake-cinema.vercel.app/`.
 
 ## 🏗️ Estructura del Proyecto
-
+```bash
 proyecto-cine/
 ├── features/ # Pruebas BDD con Behave
 │ ├── peliculas.feature # Escenarios Gherkin
@@ -24,7 +24,7 @@ proyecto-cine/
 ├── requirements.txt # Dependencias
 ├── pytest.ini # Configuración pytest
 └── README.md # Este archivo
-
+```
 
 ## 🚀 Instalación y Configuración
 

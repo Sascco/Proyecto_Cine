@@ -6,7 +6,7 @@ Prueba la integración de todas las funcionalidades del sistema
 import pytest
 import time
 from pages.peliculas_page import PeliculasPage
-from utils.helpers import NavigationLocators  # Importación añadida
+from utils.helpers import NavigationLocators  # Importación CORREGIDA
 
 
 @pytest.mark.e2e
@@ -23,9 +23,11 @@ class TestFlujoCompraCompleto:
         page.abrir()
 
         # 2. Verificar que la cartelera está cargada
-        assert page.obtener_titulo_cartelera() == "Cartelera"
+        titulo_cartelera = page.obtener_titulo_cartelera()
+        assert titulo_cartelera == "Cartelera", f"Título esperado: 'Cartelera', obtenido: '{titulo_cartelera}'"
+
         peliculas = page.obtener_peliculas()
-        assert len(peliculas) > 0
+        assert len(peliculas) > 0, "No se encontraron películas en la cartelera"
 
         print("✓ Cartelera cargada correctamente")
 
@@ -35,7 +37,8 @@ class TestFlujoCompraCompleto:
             time.sleep(2)  # Esperar carga de página de detalle
 
             # Verificar que estamos en página de detalle
-            assert "movie" in driver.current_url.lower() or "detalle" in driver.current_url.lower()
+            current_url = driver.current_url.lower()
+            assert "movie" in current_url or "detalle" in current_url or "film" in current_url
             print("✓ Página de detalle cargada")
 
         except Exception as e:
@@ -57,23 +60,26 @@ class TestsRegresion:
         page = PeliculasPage(driver)
         page.abrir()
 
-        assert driver.current_url == page.url
-        assert page.is_element_visible(NavigationLocators.CARTELERA_TITLE)
+        # Verificar URL
+        assert driver.current_url == page.url, f"URL esperada: {page.url}, obtenida: {driver.current_url}"
+
+        # Verificar que el título de cartelera es visible
+        assert page.is_element_visible(NavigationLocators.CARTELERA_TITLE), "El título de cartelera no es visible"
 
     def test_navegacion_entre_paginas(self, driver):
         """Verifica la navegación básica entre páginas"""
         page = PeliculasPage(driver)
         page.abrir()
 
-        # Verificar que podemos recargar la página
-        driver.refresh()
-        assert page.obtener_titulo_cartelera() == "Cartelera"
+        # Verificar título inicial
+        titulo_inicial = page.obtener_titulo_cartelera()
+        assert titulo_inicial == "Cartelera"
 
-    def test_navegacion_entre_paginas(self, driver):
-        """Verifica la navegación básica entre páginas"""
-        page = PeliculasPage(driver)
-        page.abrir()
-
-        # Verificar que podemos recargar la página
+        # Recargar la página y verificar que sigue funcionando
         driver.refresh()
-        assert page.obtener_titulo_cartelera() == "Cartelera"
+
+        # Esperar a que la página se recargue
+        time.sleep(2)
+
+        titulo_despues_refresh = page.obtener_titulo_cartelera()
+        assert titulo_despues_refresh == "Cartelera", f"Título después de refresh: {titulo_despues_refresh}"

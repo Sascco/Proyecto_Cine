@@ -34,7 +34,7 @@ class TestPeliculasPage:
         assert len(peliculas) > 0, "No se encontraron películas en la cartelera"
         print(f"Se encontraron {len(peliculas)} películas")
 
-    def test_estructura_tarjeta_pelicula(self, driver):
+    def test_estructura_tarjeta_pelicula(self, driver, cartelera=None):
         """Verifica que cada tarjeta de película tiene la estructura correcta"""
         page = PeliculasPage(driver)
         page.abrir()

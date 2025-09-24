@@ -1,54 +1,28 @@
 """
-Tests para la página de películas del cine
-Pruebas funcionales de la cartelera y navegación básica
+Utilidades y localizadores compartidos para el proyecto de testing de cine
+Contiene URLs, selectores y configuraciones comunes
 """
 
-import pytest
-from pages.peliculas_page import PeliculasPage
+from selenium.webdriver.common.by import By
 
+# URLs de la aplicación
+URL_CINE = "https://fake-cinema.vercel.app/"
 
-class TestPeliculasPage:
-    """Suite de tests para la página de películas"""
+class SearchLocators:
+    """Localizadores para la funcionalidad de búsqueda"""
+    SEARCH_ICON = (By.CSS_SELECTOR, "svg.lucide-search")
+    SEARCH_INPUT = (By.CSS_SELECTOR, "input[type='search'], input[placeholder*='buscar']")
 
-    def test_abrir_cartelera(self, driver):
-        """Verifica que la página de cartelera se abre correctamente"""
-        page = PeliculasPage(driver)
-        page.abrir()
+class MovieCardLocators:
+    """Localizadores para las tarjetas de películas"""
+    MOVIE_CARD = (By.CSS_SELECTOR, "div.p-4.text-white")
+    MOVIE_TITLE = (By.CSS_SELECTOR, "h3.font-bold.truncate")
+    MOVIE_RATING = (By.XPATH, ".//div[contains(@class, 'inline-flex') and contains(@class, 'bg-yellow-500')]")
+    MOVIE_DURATION = (By.CSS_SELECTOR, "span.text-gray-400")
+    MOVIE_PREMIERE_LABEL = (By.XPATH, ".//div[contains(@class, 'inline-flex') and contains(., 'Estreno')]")
+    MOVIE_DETAIL_LINK = (By.XPATH, ".//a[text()='Ver detalle']")
 
-        # Verificar URL
-        assert "fake-cinema" in driver.current_url
-        print(f"URL actual: {driver.current_url}")
-
-        # Verificar título de cartelera
-        titulo = page.obtener_titulo_cartelera()
-        assert titulo == "Cartelera", f"Título esperado: 'Cartelera', encontrado: '{titulo}'"
-        print(f"Título de cartelera: {titulo}")
-
-    def test_lista_peliculas_cargada(self, driver):
-        """Verifica que la lista de películas se carga correctamente"""
-        page = PeliculasPage(driver)
-        page.abrir()
-
-        # Verificar que hay películas en cartelera
-        peliculas = page.obtener_peliculas()
-        assert len(peliculas) > 0, "No se encontraron películas en la cartelera"
-        print(f"Se encontraron {len(peliculas)} películas")
-
-    def test_estructura_tarjeta_pelicula(self, driver, cartelera=None):
-        """Verifica que cada tarjeta de película tiene la estructura correcta"""
-        page = PeliculasPage(driver)
-        page.abrir()
-
-        peliculas = page.obtener_peliculas()
-
-        for i, pelicula in enumerate(peliculas[:3]):  # Probar solo las primeras 3
-            try:
-                titulo = pelicula.find_element(*MovieCardLocators.MOVIE_TITLE)
-                assert titulo.text.strip() != "", f"Película {i} sin título"
-
-                duracion = pelicula.find_element(*MovieCardLocators.MOVIE_DURATION)
-                assert duracion.text.strip() != "", f"Película {i} sin duración"
-
-                print(f"Película {i}: {titulo.text} - {duracion.text}")
-            except Exception as e:
-                pytest.fail(f"Error en película {i}: {str(e)}")cartelera encontrado: {titulo}")
+class NavigationLocators:
+    """Localizadores para navegación y elementos generales"""
+    CARTELERA_TITLE = (By.XPATH, "//h2[contains(text(), 'Cartelera')]")
+    PAGE_HEADER = (By.TAG_NAME, "h1")

@@ -42,8 +42,3 @@ class PeliculasPage(BasePage):
             link_detalle.click()
         else:
             raise IndexError(f"Índice {indice_pelicula} fuera de rango. Total películas: {len(peliculas)}")
-
-    def buscar_pelicula(self, texto_busqueda):
-        """Realiza una búsqueda de película (si la funcionalidad está implementada)"""
-        # Nota: Esta funcionalidad depende de que el sitio tenga implementada la búsqueda
-        print("Advertencia: La funcionalidad de búsqueda puede no estar implementada en el sitio")

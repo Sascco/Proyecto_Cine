@@ -6,6 +6,7 @@ Prueba la integración de todas las funcionalidades del sistema
 import pytest
 import time
 from pages.peliculas_page import PeliculasPage
+from utils.helpers import NavigationLocators  # Importación añadida
 
 
 @pytest.mark.e2e
@@ -58,6 +59,15 @@ class TestsRegresion:
 
         assert driver.current_url == page.url
         assert page.is_element_visible(NavigationLocators.CARTELERA_TITLE)
+
+    def test_navegacion_entre_paginas(self, driver):
+        """Verifica la navegación básica entre páginas"""
+        page = PeliculasPage(driver)
+        page.abrir()
+
+        # Verificar que podemos recargar la página
+        driver.refresh()
+        assert page.obtener_titulo_cartelera() == "Cartelera"
 
     def test_navegacion_entre_paginas(self, driver):
         """Verifica la navegación básica entre páginas"""

@@ -1,4 +1,3 @@
-# pages/__init__.py
 """
 Paquete de Page Objects para el sistema de testing de cine
 """

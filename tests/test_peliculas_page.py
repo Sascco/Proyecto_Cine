@@ -2,7 +2,7 @@
 Utilidades y localizadores compartidos para el proyecto de testing de cine
 Contiene URLs, selectores y configuraciones comunes
 """
-"""
+
 from selenium.webdriver.common.by import By
 
 # URLs de la aplicación
@@ -26,4 +26,3 @@ class NavigationLocators:
     """Localizadores para navegación y elementos generales"""
     CARTELERA_TITLE = (By.XPATH, "//h2[contains(text(), 'Cartelera')]")
     PAGE_HEADER = (By.TAG_NAME, "h1")
-"""

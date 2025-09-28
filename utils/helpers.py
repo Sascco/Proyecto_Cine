@@ -7,6 +7,8 @@ from selenium.webdriver.common.by import By
 
 # URLs de la aplicación
 URL_CINE = "https://fake-cinema.vercel.app/"
+ALIMENTOS_PAGE_URL = "https://fake-cinema.vercel.app/alimentos"
+
 
 class SearchLocators:
     search_icon = (By.CSS_SELECTOR, "svg.lucide-search")    # Ícono de búsqueda (svg.lucide-search en tu código original)
@@ -37,11 +39,14 @@ class MenuAlimentosLocators:
     MENU_ITEM_ADD_BUTTON = (By.CSS_SELECTOR, "button.add-to-cart")
     SEARCH_INPUT = (By.CSS_SELECTOR, "input.search-bar")
     SEARCH_BUTTON = (By.CSS_SELECTOR, "button.search-button")
-    NAV_CART_BUTTON = (By.CSS_SELECTOR, "button.nav-cart")
-    CART_ITEM = (By.CSS_SELECTOR, "div.flex.justify-between.border-b.pb-2")
+
+class CarritoLocators:
+    NAV_CART_BUTTON = (By.XPATH, "/html/body/div/header/div/div[1]/nav/a[6]")
+    ITEM_NOMBRE = (By.CSS_SELECTOR, "div.flex.justify-between.border-b.pb-2")
     CART_ITEM_TITLE = (By.CSS_SELECTOR, ".cart-item__title")
-    CART_ITEM_QTY = (By.CSS_SELECTOR, ".cart-item__quantity")
-    CART_ITEM_UNIT_PRICE = (By.CSS_SELECTOR, ".cart-item__unit-price")
+    ITEM_CANTIDAD  = (By.CSS_SELECTOR, ".cart-item__quantity")
+    ITEM_PRECIO  = (By.CSS_SELECTOR, ".cart-item__unit-price")
     CART_ITEM_SUBTOTAL = (By.CSS_SELECTOR, ".cart-item__subtotal")
-    CART_TOTAL = (By.CSS_SELECTOR, "span.total-price")
-    PROCEED_TO_PAY_BUTTON = (By.CSS_SELECTOR, "button.proceed-payment")
+    ITEM_TOTAL = (By.CSS_SELECTOR, ".cart-item .total")
+    TOTAL_GENERAL = (By.CSS_SELECTOR, ".cart-summary .total")
+    BOTON_PAGO = (By.CSS_SELECTOR, "button.checkout")

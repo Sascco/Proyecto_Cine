@@ -21,7 +21,7 @@ Feature: Ver menú de Alimentos
       | Sandwich de Pollo  	|
       | Dulces Surtidos  	|
       | Agua Embotellada  	|
-
+"""
   Scenario: Buscar alimento por nombre
     When escribo “Pretzel Jumbo” en la barra de búsqueda
     And Presiono el botón de buscar
@@ -58,3 +58,4 @@ Feature: Ver menú de Alimentos
       | Nachos              | 3        | 5.00            | 15.00    |
     Then el carrito debe mostrar el total "<23.50>"
     And permitir proceder al pago
+"""

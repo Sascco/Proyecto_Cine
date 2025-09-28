@@ -1,10 +1,9 @@
 """
-Page Object Model para la página de películas
-Contiene métodos para interactuar con la cartelera de cine
+Page Object Model para la página de películas Contiene métodos para interactuar con la cartelera de cine
 """
 
 from pages.base_page import BasePage
-from utils.helpers import MovieCardLocators, NavigationLocators
+from utils.helpers import URL_CINE, SearchLocators, MovieCardLocators
 
 
 class PeliculasPage(BasePage):

@@ -39,7 +39,7 @@ class TestFlujoCompraCompleto:
             # Verificar que estamos en página de detalle
             current_url = driver.current_url.lower()
             assert "movie" in current_url or "detalle" in current_url or "film" in current_url
-            print("✓ Página de detalle cargada")
+            print("✓Página de detalle cargada")
 
         except Exception as e:
             pytest.skip(f"Funcionalidad de detalle no disponible: {str(e)}")

@@ -11,15 +11,15 @@ Feature: Ver menú de Alimentos
     Then debo ver una lista de alimentos disponibles
     And cada ítem debe mostrar su título, imagen, breve descripción y precio
     And debo ver en el menú los siguientes alimentos:
-      | Palomitas   			  |
-      | Hot Dog  			      |
-      | Nachos  			      |
+      | Palomitas   		|
+      | Hot Dog  		|
+      | Nachos  		|
       | Pizza por rebanada	|
       | Hamburguesa Clásica	|
-      | Helado Sundae		    |
-      | Pretzel Jumbo  		  |
+      | Helado Sundae		|
+      | Pretzel Jumbo  		|
       | Sandwich de Pollo  	|
-      | Dulces Surtidos  		|
+      | Dulces Surtidos  	|
       | Agua Embotellada  	|
 
   Scenario: Buscar alimento por nombre

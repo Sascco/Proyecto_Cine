@@ -4,17 +4,19 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.drivers.chrome import ChromeDriver
 
 
-def create_driver(headless: bool = False):
+def create_driver(headless: bool = True):
     options = webdriver.ChromeOptions()
 
-    if headless:
-        options.add_argument("--headless=new")
-
+    # Argumentos comunes
     options.add_argument("--start-maximized")
 
+    # Modo headless (si se activa)
+    if headless:
+        options.add_argument("--headless=new")  # Para Chrome 109+
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
 
     driver = webdriver.Chrome(
         service=ChromeService(ChromeDriverManager().install()),
@@ -23,4 +25,5 @@ def create_driver(headless: bool = False):
 
     driver.implicitly_wait(5)
     return driver
+
 

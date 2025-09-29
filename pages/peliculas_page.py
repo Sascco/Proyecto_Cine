@@ -3,7 +3,7 @@ Page Object Model para la página de películas Contiene métodos para interactu
 """
 
 from pages.base_page import BasePage
-from utils.helpers import URL_CINE, SearchLocators, MovieCardLocators
+from utils.helpers import URL_CINE, SearchLocators, MovieCardLocators, NavigationLocators
 
 
 class PeliculasPage(BasePage):

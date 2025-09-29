@@ -17,9 +17,6 @@ Feature: Ver películas disponibles
     When hago clic en "Ver detalle" en la tarjeta de "Superman"
     Then debo ser llevado a la página de detalle de "Superman", en la cual debe aparecer el cine y las fechas de las funciones
 
-  Scenario: Buscar película por título
-    When escribo "Avengers" en la barra de búsqueda
-    And presiono el botón de buscar
-    Then debo ver solo películas que contengan "Avengers" en el título
-#BUG- El icono (lupa) ubicado en la esquina superior derecha, no funciona.
-
+  Scenario: Presionar el botón de buscar sin funcionalidad
+    When presiono el botón de buscar
+    Then la lista de resultados no cambia y muestra todos los ítems

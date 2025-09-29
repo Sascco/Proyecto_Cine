@@ -31,7 +31,9 @@ class NavigationLocators:
 class MenuAlimentosLocators:
     """Localizadores para la pagina el menú ALIMENTOS"""
     MENU_ALIMENTOS_LINK = (By.XPATH, "/html/body/div/header/div/div[1]/nav/a[2]")
-    MENU_ITEM_TITLE = (By.CSS_SELECTOR, "div.p-4 > h3.font-bold.text-lg.mb-1")
+    MENU_ALIMENTOS_PAGE_TITLE = (By.XPATH, "/html/body/div/main/h1")
+    MENU_ITEM = (By.CSS_SELECTOR, "a.bg-\\[\\#0d1f3a\\].rounded-lg.overflow-hidden") # Locator para cada tarjeta de producto
+    MENU_ITEM_TITLE = (By.CSS_SELECTOR, "h3.font-bold.text-lg.mb-1") # Locator para el título dentro de cada tarjeta
     MENU_ITEM_IMAGE = (By.XPATH, "./img[@class='w-full h-40 object-cover']")
     MENU_ITEM_DESC = (By.CSS_SELECTOR, "div.p-4 > p.text-sm.text-gray-300.mb-2")
     MENU_ITEM_PRICE = (By.CSS_SELECTOR, "div.p-4 > p.text-blue-400.font-semibold")

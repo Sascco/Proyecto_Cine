@@ -9,10 +9,6 @@ def step_ir_a_pagina_alimentos(context):
     context.menu_page = MenuAlimentosPage(context.driver)
     context.menu_page.abrir()
 
-@when("la página carga completamente")
-def step_esperar_carga_pagina(context):
-    context.menu_page.wait_until_loaded()
-
 @then("debo ver una lista de alimentos disponibles")
 def step_ver_lista_alimentos(context):
     nombres = context.menu_page.obtener_nombres_productos()

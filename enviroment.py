@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def before_all(context):
-    context.browser = 'chrome'  # Cambia a 'firefox' si lo deseas
+    context.browser = 'chrome'  # Aqui podemos establecer el navegador de preferencia. 'firefox' si lo deseas
 
 def before_scenario(context, scenario):
     """

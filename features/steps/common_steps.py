@@ -1,8 +1,17 @@
 from behave import when, then
 import logging
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 bug_reported = False
+
+@when("la página carga completamente")
+def step_impl(context):
+    # Espera hasta que el DOM esté listo o el <body> sea visible
+    WebDriverWait(context.driver, 10).until(
+        EC.presence_of_all_elements_located(("tag name", "body"))
+    )
 
 @when("presiono el botón de buscar")
 def step_presionar_boton_buscar(context):

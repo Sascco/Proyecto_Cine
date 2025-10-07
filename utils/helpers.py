@@ -1,13 +1,10 @@
-"""
-Utilidades y localizadores compartidos para el proyecto de testing de cine
-Contiene URLs, selectores y configuraciones comunes
-"""
 
 from selenium.webdriver.common.by import By
 
 # URLs de la aplicación
 URL_CINE = "https://fake-cinema.vercel.app/"
 ALIMENTOS_PAGE_URL = "https://fake-cinema.vercel.app/alimentos"
+PROMOS_PAGE_URL = "https://fake-cinema.vercel.app/promos"
 
 
 class SearchLocators:
@@ -42,13 +39,10 @@ class MenuAlimentosLocators:
     SEARCH_INPUT = (By.CSS_SELECTOR, "input.search-bar")
     SEARCH_BUTTON = (By.CSS_SELECTOR, "button.search-button")
 
-class CarritoLocators:
-    NAV_CART_BUTTON = (By.XPATH, "/html/body/div/header/div/div[1]/nav/a[6]")
-    ITEM_NOMBRE = (By.CSS_SELECTOR, "div.flex.justify-between.border-b.pb-2")
-    CART_ITEM_TITLE = (By.CSS_SELECTOR, ".cart-item__title")
-    ITEM_CANTIDAD  = (By.CSS_SELECTOR, ".cart-item__quantity")
-    ITEM_PRECIO  = (By.CSS_SELECTOR, ".cart-item__unit-price")
-    CART_ITEM_SUBTOTAL = (By.CSS_SELECTOR, ".cart-item__subtotal")
-    ITEM_TOTAL = (By.CSS_SELECTOR, ".cart-item .total")
-    TOTAL_GENERAL = (By.CSS_SELECTOR, ".cart-summary .total")
-    BOTON_PAGO = (By.CSS_SELECTOR, "button.checkout")
+class PromosLocators:
+    PROMOS_TITLE = (By.CSS_SELECTOR, "h1.text-2xl.font-bold.mb-4")  # Título "Promociones"
+    PROMO_CARD_TITLE = (By.XPATH, "/html/body/div/main/div/a[3]/div/h3")  # Todas las tarjetas
+    PROMO_NAME = (By.XPATH, "/html/body/div/main/div/a[3]/div/h3")  # Nombre en tarjeta
+    PROMO_DESCRIPTION = (By.XPATH, "/html/body/div/main/div/a[3]/div/p[1]")  # Descripción en tarjeta
+    PROMO_PRICE = (By.XPATH, "/html/body/div/main/div/a[3]/div/p[2]")  # Precio en tarjeta
+

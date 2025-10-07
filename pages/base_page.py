@@ -11,6 +11,7 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 class BasePage:
     """Clase base que contiene métodos comunes para todas las páginas"""
 
+
     def __init__(self, driver, timeout=10):
         """
         Inicializa la página base

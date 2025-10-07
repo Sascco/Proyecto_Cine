@@ -185,23 +185,20 @@ SOFTWARE.
 ## Authors
 
 Ali Valentin Tovar Morales
-
 QA Automation Tester
-Buenos Aires, Argentina
-ali.v.tovar@gmail.com
+-Buenos Aires, Argentina
+-ali.v.tovar@gmail.com
 [LinkedIn](https://www.linkedin.com/in/ali-v-tovar/)
 
 Roberto Gamboa López
-
 QA Automation Tester
-Chiapas, México
-robertogamboa.9006@gmail.com
+-Chiapas, México
+-robertogamboa.9006@gmail.com
 [LinkedIn](https://www.linkedin.com/in/robertogamboa07/)
 
 Sergio Solano
-
 QA Automation Tester
-Villavicencio, Colombia
-sergiosolanoc@gmail.com
+-Villavicencio, Colombia
+-sergiosolanoc@gmail.com
 [LinkedIn](https://www.linkedin.com/in/sergiosc-qa-tester/)
 

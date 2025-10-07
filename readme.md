@@ -35,7 +35,7 @@ proyecto-cine/
 
 ### 1. Clonar y configurar el proyecto
 ```bash
-  git clone <repositorio>
+  git clone https://github.com/Sascco/Proyecto_Cine.git
   cd proyecto-cine
 ```
 ### 2. Crear entorno virtual (recomendado)

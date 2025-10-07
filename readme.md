@@ -32,6 +32,11 @@ La automatización está organizada con tres capas:
 
 - Utilidades centralizadas para iniciar y controlar el navegador de forma coherente.
 
+## Recursos
+
+Jira: [Tablero](https://ali-valentin-tovar-morales.atlassian.net/jira/software/projects/CIN/list?jql=project+%3D+%22CIN%22+ORDER+BY+created+DESC&atlOrigin=eyJpIjoiYzhjZWJjYTQyZTBiNGIxNDg3YmU1MThkOWFhYjQ5NjIiLCJwIjoiaiJ9)  
+
+Confluence: [Resumen](https://ali-valentin-tovar-morales.atlassian.net/wiki/x/AQBEBw) 
 
 ## Alcance de la Automatización
 
